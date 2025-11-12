@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ChainBlock — Web3 Development & Solutions</title>
+  <meta name="description" content="ChainBlock adalah perusahaan teknologi Web3 yang mengembangkan solusi blockchain, smart contract, dan integrasi desentralisasi untuk bisnis masa depan." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    
+    .gradient-hero { background: linear-gradient(120deg, #ef4444, #f97316); }
+
+    /* Animasi fade-in  */
+    @keyframes gentle-fade-up {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .animate-gentle { animation: gentle-fade-up 700ms ease-out both; }
+
+    .card-hover { transition: transform 450ms cubic-bezier(.22,.8,.32,1), box-shadow 450ms ease-out; }
+    .card-hover:hover { transform: translateY(-6px) scale(1.03); }
+  </style>
+</head>
+<body class="antialiased text-slate-800 bg-white">
+  <!-- Header / Navigation -->
+  <header class="border-b bg-white/70 backdrop-blur">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-3">
+        <!-- Logo: chain link + block motif -->
+        <div class="w-10 h-10 rounded-lg flex items-center justify-center bg-gradient-to-br from-red-500 to-orange-400 text-white font-semibold">
+          <!-- simplified chain-block mark -->
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+            <rect x="3" y="6" width="6" height="6" rx="1" fill="white" opacity="0.95"/>
+            <rect x="15" y="12" width="6" height="6" rx="1" fill="white" opacity="0.95"/>
+            <path d="M9 9l6 6" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="text-lg font-semibold text-slate-800">ChainBlock</span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-6">
+        <a href="#features" class="hover:text-red-500">Fitur</a>
+        <a href="#about" class="hover:text-red-500">Tentang</a>
+        <a href="#contact" class="hover:text-red-500">Kontak</a>
+        <a href="#" class="ml-4 inline-block px-4 py-2 rounded-md border border-red-500 text-red-500 hover:bg-red-50">Masuk</a>
+      </nav>
+
+      <div class="md:hidden">
+        <button id="mobileMenuBtn" aria-expanded="false" aria-controls="mobileMenu" class="p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500">
+          <svg id="iconOpen" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg id="iconClose" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobileMenu" class="md:hidden border-t hidden bg-white">
+      <div class="px-6 py-4 flex flex-col gap-3">
+        <a href="#features" class="py-2">Fitur</a>
+        <a href="#about" class="py-2">Tentang</a>
+        <a href="#contact" class="py-2">Kontak</a>
+        <a href="#" class="mt-2 inline-block px-4 py-2 rounded-md border text-red-500 border-red-500">Masuk</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <main>
+    <section class="gradient-hero text-white">
+      <div class="max-w-6xl mx-auto px-6 py-20 lg:py-28 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+        <div class="animate-gentle">
+          <h1 class="text-4xl sm:text-5xl font-extrabold leading-tight">Membangun Fondasi Dunia Desentralisasi Melalui Web3.</h1>
+          <p class="mt-4 text-orange-100 max-w-xl">ChainBlock membantu bisnis mengintegrasikan teknologi blockchain ke dalam sistem mereka: dari smart contracts, NFT marketplace, hingga aplikasi DeFi dengan standar keamanan dan audit yang ketat.</p>
+
+          <div class="mt-6 flex gap-3">
+            <a href="#contact" class="inline-flex items-center gap-2 px-5 py-3 rounded-md bg-white text-red-600 font-semibold hover:bg-orange-50 transition-colors duration-200">Hubungi Kami</a>
+            <a href="#features" class="inline-flex items-center gap-2 px-5 py-3 rounded-md border border-white/70 hover:bg-white/10 transition-colors duration-200">Lihat Fitur</a>
+          </div>
+
+          <ul class="mt-6 text-sm text-slate-100 flex flex-col sm:flex-row gap-4">
+            <li>• Jaminan audit & security-first approach</li>
+            <li>• Integrasi cross-chain</li>
+            <li>• Tim engineering berpengalaman</li>
+          </ul>
+        </div>
+
+        <!-- Illustration -->
+        <div class="flex items-center justify-center animate-gentle">
+          <div class="w-full max-w-lg bg-white/6 rounded-2xl p-6 backdrop-blur-sm">
+            <div class="h-52 bg-gradient-to-br from-white/6 to-white/3 rounded-lg border border-white/10 p-4 flex flex-col justify-between">
+              <div class="flex justify-between items-start">
+                <div class="h-3 w-28 rounded-full bg-white/10"></div>
+                <div class="h-3 w-12 rounded-full bg-white/10"></div>
+              </div>
+              <div class="grid grid-cols-3 gap-3">
+                <div class="h-20 rounded-lg bg-white/8 p-3">
+                  <div class="h-3 w-16 bg-white/10 rounded mb-2"></div>
+                  <div class="h-6 w-10 bg-white/20 rounded"></div>
+                </div>
+                <div class="h-20 rounded-lg bg-white/8 p-3">
+                  <div class="h-3 w-16 bg-white/10 rounded mb-2"></div>
+                  <div class="h-6 w-10 bg-white/20 rounded"></div>
+                </div>
+                <div class="h-20 rounded-lg bg-white/8 p-3">
+                  <div class="h-3 w-16 bg-white/10 rounded mb-2"></div>
+                  <div class="h-6 w-10 bg-white/20 rounded"></div>
+                </div>
+              </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="max-w-6xl mx-auto px-6 py-16">
+      <h2 class="text-2xl font-semibold">Fitur Unggulan ChainBlock</h2>
+      <p class="mt-2 text-slate-600 max-w-2xl">Solusi terintegrasi untuk enterprise dan startup yang ingin meluncurkan produk Web3 dengan aman dan terukur.</p>
+
+      <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Feature 1: Architecture / Network -->
+        <article class="p-5 border rounded-lg bg-white/5 card-hover">
+          <div class="flex items-center gap-4">
+            <div class="p-3 rounded-md bg-red-50/20">
+              <!-- network icon (chain nodes) -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M12 3v4M12 17v4M4.2 7.8l3 3M16.8 16.2l3 3M4.2 16.2l3-3M16.8 7.8l3-3"/>
+                <circle cx="12" cy="12" r="2" stroke-width="1.6"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-semibold text-slate-800">Blockchain Architecture</h3>
+              <p class="mt-1 text-sm text-slate-600">Desain jaringan yang scalable, termasuk layer-2 integration, consensus tuning, dan monitoring on-chain untuk performa optimal.</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Feature 2: Smart contracts -->
+        <article class="p-5 border rounded-lg bg-white/5 card-hover">
+          <div class="flex items-center gap-4">
+            <div class="p-3 rounded-md bg-orange-50/20">
+              <!-- contract icon (document + shield) -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-orange-400" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M12 8v4l2 2"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M7 21h10a2 2 0 002-2V7a2 2 0 00-2-2H9l-2 2v14z"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-semibold text-slate-800">Smart Contract & Audit</h3>
+              <p class="mt-1 text-sm text-slate-600">Penulisan, pengujian, dan audit smart contract (formal verification opsional) untuk mengurangi risiko exploitable bugs.</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Feature 3: dApps / DeFi -->
+        <article class="p-5 border rounded-lg bg-white/5 card-hover">
+          <div class="flex items-center gap-4">
+            <div class="p-3 rounded-md bg-red-50/20">
+              <!-- app / integration icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M3 7l9 6 9-6M3 17l9 6 9-6"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-semibold text-slate-800">dApps & DeFi Integration</h3>
+              <p class="mt-1 text-sm text-slate-600">Implementasi front-to-back decentralized applications dan integrasi protokol keuangan terdesentralisasi untuk layanan berskala.</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="bg-slate-50">
+      <div class="max-w-6xl mx-auto px-6 py-16 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+        <div>
+          <h2 class="text-2xl font-semibold text-slate-800">Tentang ChainBlock</h2>
+          <p class="mt-4 text-slate-600">ChainBlock adalah perusahaan Web3 dari Indonesia yang menyediakan layanan pengembangan blockchain, audit smart contract, dan konsultasi integrasi on-chain. Kami menekankan praktik keamanan, transparansi, dan dokumentasi teknis yang jelas untuk klien enterprise dan startup.</p>
+          <ul class="mt-4 space-y-2 text-slate-600">
+            <li><strong>Misi:</strong> Memfasilitasi transisi bisnis ke era desentralisasi secara aman dan terukur.</li>
+            <li><strong>Nilai:</strong> Keamanan, keterbukaan, dan berorientasi hasil.</li>
+            <li><strong>Keunggulan:</strong> Tim gabungan antara software architects, cryptographers, dan devops engineer.</li>
+          </ul>
+        </div>
+
+        <div class="rounded-lg border p-6 bg-white shadow-sm">
+          <h3 class="font-semibold">Pencapaian Kami</h3>
+          <div class="mt-4 grid grid-cols-2 gap-4">
+            <div>
+              <div class="text-3xl font-bold text-red-600">200+</div>
+              <div class="text-sm text-slate-500">Smart Contract Terdeploy</div>
+            </div>
+            <div>
+              <div class="text-3xl font-bold text-orange-500">50+</div>
+              <div class="text-sm text-slate-500">Proyek Blockchain Global</div>
+            </div>
+          </div>
+          <p class="mt-4 text-sm text-slate-500">Didirikan pada 2021, kami bekerja dengan startup hingga korporasi dalam mengimplementasikan solusi Web3.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section id="contact" class="max-w-6xl mx-auto px-6 py-16">
+      <h2 class="text-2xl font-semibold text-slate-800">Hubungi ChainBlock</h2>
+      <p class="mt-2 text-slate-600">Tanyakan proposal, audit, atau kolaborasi — isi form di bawah, kami akan merespons secepatnya.</p>
+
+      <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <form class="space-y-4" action="#" method="post" onsubmit="handleSubmit(event)">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <label class="block">
+              <span class="text-sm text-slate-600">Nama</span>
+              <input required name="name" type="text" autocomplete="name" class="mt-1 block w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500" placeholder="Nama lengkap" />
+            </label>
+
+            <label class="block">
+              <span class="text-sm text-slate-600">Email</span>
+              <input required name="email" type="email" autocomplete="email" class="mt-1 block w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500" placeholder="ray@mail.com" />
+            </label>
+          </div>
+
+          <label class="block">
+            <span class="text-sm text-slate-600">Organisasi (opsional)</span>
+            <input name="company" type="text" autocomplete="organization" class="mt-1 block w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500" placeholder="Nama perusahaan" />
+          </label>
+
+          <label class="block">
+            <span class="text-sm text-slate-600">Pesan</span>
+            <textarea required name="message" rows="5" class="mt-1 block w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500" placeholder="Tulis pesan Anda..."></textarea>
+          </label>
+
+          <div>
+            <button type="submit" class="inline-flex items-center gap-2 px-5 py-3 rounded-md bg-gradient-to-r from-red-500 to-orange-400 text-white font-semibold transition-shadow duration-200">Kirim Pesan</button>
+          </div>
+        </form>
+
+        <div class="space-y-4">
+          <div class="rounded-lg border p-6 bg-white">
+            <h3 class="font-semibold">Kantor Pusat</h3>
+            <p class="mt-2 text-sm text-slate-600">Gedung Poris, Lampung</p>
+            <p class="mt-2 text-sm text-slate-600">Email: contact@chainblock.tech</p>
+            <p class="mt-2 text-sm text-slate-600">Telepon: +62 21 0011 7711</p>
+          </div>
+
+          <div class="rounded-lg border p-6 bg-white">
+            <h3 class="font-semibold">Jam Operasional</h3>
+            <p class="mt-2 text-sm text-slate-600">Senin - Jumat 09:00 - 18:00 WIB</p>
+            <p class="mt-2 text-sm text-slate-600">Dukungan teknis 24/7 untuk klien premium</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t bg-white">
+      <div class="max-w-6xl mx-auto px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="text-sm text-slate-600">© 2025 ChainBlock — Semua hak dilindungi.</div>
+        <div class="flex items-center gap-4">
+          <a href="#" aria-label="Twitter" class="hover:text-red-500">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M23 3a10.9 10.9 0 01-3.14 1.53A4.48 4.48 0 0012 7v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>
+          </a>
+          <a href="#" aria-label="LinkedIn" class="hover:text-red-500">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4V8h4v2"/></svg>
+          </a>
+          <a href="#" aria-label="GitHub" class="hover:text-red-500">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 2C6.5 2 2 6.5 2 12c0 4.4 2.9 8.1 6.9 9.4.5.1.7-.2.7-.5v-2c-2.8.6-3.4-1.2-3.4-1.2-.5-1.2-1.2-1.6-1.2-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.1 1.7 1.1 1 .1 1.6.8 2 1.1.6.4 1.6.3 2 .2.1-.8.4-1.3.7-1.6-2.2-.3-4.5-1.1-4.5-5 0-1.1.4-2 1.1-2.7-.1-.3-.5-1.2.1-2.5 0 0 .9-.3 2.9 1.1a10 10 0 015.2 0c2-1.4 2.9-1.1 2.9-1.1.6 1.3.2 2.2.1 2.5.7.7 1.1 1.6 1.1 2.7 0 3.9-2.3 4.7-4.5 5 .4.4.8 1 .8 2v3c0 .3.2.6.7.5A10 10 0 0022 12c0-5.5-4.5-10-10-10z"/></svg>
+          </a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    // Mobile menu toggle
+    const mobileBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const iconOpen = document.getElementById('iconOpen');
+    const iconClose = document.getElementById('iconClose');
+
+    mobileBtn.addEventListener('click', () => {
+      const expanded = mobileBtn.getAttribute('aria-expanded') === 'true';
+      mobileBtn.setAttribute('aria-expanded', String(!expanded));
+      mobileMenu.classList.toggle('hidden');
+      iconOpen.classList.toggle('hidden');
+      iconClose.classList.toggle('hidden');
+    });
+
+    // Simple form handler (prototype) — prevents navigation and shows a quick confirmation
+    function handleSubmit(e) {
+      e.preventDefault();
+      alert('Terima kasih — pesan Anda telah dikirim (demo).');
+      e.target.reset();
+    }
+  </script>
+</body>
+</html>
