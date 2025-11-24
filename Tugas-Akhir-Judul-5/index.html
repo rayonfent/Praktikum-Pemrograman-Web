@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kalkulator Interaktif — Full Version (Merah)</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --panel:#fff;
+      --red-50:#ffebee;
+      --red-100:#ffcdd2;
+      --red-200:#ef9a9a;
+      --red-300:#e57373;
+      --red-400:#ef5350;
+      --red-500:#d32f2f;
+      --accent:#7f1d1d;
+      --muted:#444;
+    }
+    *{box-sizing:border-box;font-family:Inter, Arial, sans-serif}
+    body{margin:0;padding:20px;min-height:100vh;background:var(--bg);display:flex;justify-content:center;align-items:flex-start}
+    .container{display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;max-width:1100px;width:100%;}
+
+    .calculator{width:380px;background:var(--panel);border-radius:12px;padding:16px;box-shadow:0 8px 30px rgba(0,0,0,0.06)}
+    .display{background:linear-gradient(180deg,var(--red-50),#fff);border-radius:10px;padding:12px;min-height:84px;display:flex;flex-direction:column;justify-content:center}
+    .display .small{font-size:12px;color:var(--muted);height:16px}
+    .display .main{font-size:28px;font-weight:700;padding-top:6px;word-break:break-all}
+    .display .sub{font-size:13px;color:var(--muted);height:16px;overflow:hidden}
+
+    .keypad{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+    button.key{padding:14px;border-radius:8px;border:none;cursor:pointer;font-size:16px;background:var(--red-50)}
+    button.op{background:linear-gradient(180deg,var(--red-100),var(--red-200));color:var(--red-500);font-weight:700}
+    button.func{background:linear-gradient(180deg,#fff,var(--red-50));color:var(--accent)}
+    button.danger{background:linear-gradient(180deg,#fff,var(--red-50));color:var(--red-500);font-weight:700}
+    button.equal{background:linear-gradient(180deg,var(--red-500),var(--red-400));color:#fff;font-weight:800}
+    .num-wide{grid-column:span 2}
+    button:active{transform:translateY(1px)}
+
+    .history{width:320px;background:linear-gradient(180deg,var(--red-50),#fff);border-radius:12px;padding:12px;box-shadow:0 8px 24px rgba(0,0,0,0.04)}
+    .history h3{margin:0 0 8px 0;color:var(--red-500)}
+    .history-list{max-height:420px;overflow:auto}
+    .history-item{display:flex;justify-content:space-between;padding:8px;border-bottom:1px dashed rgba(0,0,0,0.06);align-items:center}
+    .history-item button{background:none;border:none;color:var(--red-500);cursor:pointer}
+
+    @media (max-width:900px){
+      .container{flex-direction:column;align-items:center}
+      .history{width:100%}
+      .calculator{width:100%;max-width:520px}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="calculator">
+      <div class="display">
+        <div class="small">Memory: <span id="memIndicator">0</span></div>
+        <div class="main" id="mainDisplay">0</div>
+        <div class="sub" id="subDisplay"></div>
+      </div>
+
+      <div class="keypad" id="keypad">
+        <button class="key func" data-action="MC">MC</button>
+        <button class="key func" data-action="MR">MR</button>
+        <button class="key func" data-action="M+">M+</button>
+        <button class="key func" data-action="M-">M-</button>
+
+        <button class="key danger" data-action="C">C</button>
+        <button class="key" data-action="CE">CE</button>
+        <button class="key op" data-value="/">÷</button>
+        <button class="key op" data-value="*">×</button>
+
+        <button class="key" data-value="7">7</button>
+        <button class="key" data-value="8">8</button>
+        <button class="key" data-value="9">9</button>
+        <button class="key op" data-value="-">−</button>
+
+        <button class="key" data-value="4">4</button>
+        <button class="key" data-value="5">5</button>
+        <button class="key" data-value="6">6</button>
+        <button class="key op" data-value="+">+</button>
+
+        <button class="key" data-value="1">1</button>
+        <button class="key" data-value="2">2</button>
+        <button class="key" data-value="3">3</button>
+        <button class="key equal" data-action="equals" style="grid-row:5 / span 2; grid-column:4;">=</button>
+
+        <button class="key num-wide" data-value="0">0</button>
+        <button class="key" data-value=".">.</button>
+      </div>
+    </div>
+
+    <aside class="history">
+      <h3>History</h3>
+
+      <div class="history-list" id="historyList">
+        <div style="padding:8px;color:#888">Belum ada perhitungan</div>
+      </div>
+
+      <div style="font-size:13px;margin-top:12px;color:#333;line-height:1.5;">
+        <b>Petunjuk:</b><br>
+        • <b>MC</b> = hapus memori<br>
+        • <b>MR</b> = panggil memori<br>
+        • <b>M+</b> = tambah ke memori<br>
+        • <b>M−</b> = kurangi memori<br>
+        • <b>C</b> = hapus semua<br>
+        • <b>CE</b> = hapus angka yang sedang diketik
+      </div>
+    </aside>
+  </div>
+
+<script>
+(function(){
+  let expr = "";
+  let entry = "";
+  let memory = 0;
+  let history = [];
+  const MAX_HISTORY = 5;
+
+  const mainDisplay = document.getElementById("mainDisplay");
+  const subDisplay = document.getElementById("subDisplay");
+  const memIndicator = document.getElementById("memIndicator");
+  const historyList = document.getElementById("historyList");
+  const keypad = document.getElementById("keypad");
+
+  function escapeHtml(s){ 
+    return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); 
+  }
+  function formatOp(s){ 
+    return s.replace(/\*/g,"×").replace(/\//g,"÷"); 
+  }
+
+  function updateDisplay(){
+    mainDisplay.textContent = entry || (expr ? formatOp(expr) : "0");
+    subDisplay.textContent = expr ? formatOp(expr) : "";
+    memIndicator.textContent = memory;
+  }
+
+  function tokenize(s){
+    const t=[], n=s.length; let i=0;
+    while(i<n){
+      const c=s[i];
+      if(/\s/.test(c)){ i++; continue; }
+      if(/[0-9.]/.test(c)){
+        let num=c; i++;
+        while(i<n && /[0-9.]/.test(s[i])) num+=s[i++];
+        t.push(num); 
+        continue;
+      }
+      if(/[+\-*/()]/.test(c)){ t.push(c); i++; continue; }
+      i++;
+    }
+    return t;
+  }
+
+  function toRPN(tokens){
+    const out=[], ops=[], prec={"+":1,"-":1,"*":2,"/":2};
+    for(const t of tokens){
+      if(/^\d+(\.\d+)?$/.test(t) || /^\.\d+$/.test(t)){
+        out.push(t);
+      } else if(t in prec){
+        while(ops.length && ops[ops.length-1] in prec && prec[ops[ops.length-1]]>=prec[t]){
+          out.push(ops.pop());
+        }
+        ops.push(t);
+      } else if(t==="(") ops.push(t);
+      else if(t===")"){
+        while(ops.length && ops[ops.length-1]!=="(") out.push(ops.pop());
+        ops.pop();
+      }
+    }
+    while(ops.length) out.push(ops.pop());
+    return out;
+  }
+
+  function evalRPN(rpn){
+    const st=[];
+    for(const t of rpn){
+      if(/^\d+(\.\d+)?$/.test(t) || /^\.\d+$/.test(t)){
+        st.push(parseFloat(t));
+      } else if(["+","-","*","/"].includes(t)){
+        const b=st.pop(), a=st.pop();
+        if(a===undefined||b===undefined) return {error:"Ekspresi tidak valid"};
+        if(t==="+") st.push(a+b);
+        if(t==="-") st.push(a-b);
+        if(t==="*") st.push(a*b);
+        if(t==="/"){
+          if(b===0) return {error:"Error: Pembagian dengan nol"};
+          st.push(a/b);
+        }
+      }
+    }
+    if(st.length!==1) return {error:"Ekspresi tidak valid"};
+    return {value:st[0]};
+  }
+
+  function evaluateExpression(s){
+    const tokens = tokenize(s);
+    if(!tokens.length) return {error:"Tidak ada input"};
+    const rpn = toRPN(tokens);
+    const r = evalRPN(rpn);
+    if(r.error) return r;
+    let v = r.value;
+    v = Math.round((v + Number.EPSILON)*1e12)/1e12;
+    return {value:v};
+  }
+
+  function pushHistory(e,r){
+    history.unshift({expr:e,result:r});
+    if(history.length>MAX_HISTORY) history.pop();
+    renderHistory();
+  }
+
+  function renderHistory(){
+    if(!history.length){
+      historyList.innerHTML = '<div style="padding:8px;color:#888">Belum ada perhitungan</div>';
+      return;
+    }
+    historyList.innerHTML = history
+      .map((h,i)=>`
+        <div class="history-item">
+          <div style="max-width:65%">${escapeHtml(formatOp(h.expr))}</div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <strong style="min-width:72px;text-align:right">${h.result}</strong>
+            <button data-idx="${i}" data-action="load">↺</button>
+          </div>
+        </div>
+      `).join("");
+  }
+
+  function memMC(){ memory=0; updateDisplay(); }
+  function memMR(){
+    const found = history.find(h => Number(h.result)===Number(memory));
+    if(found){ expr=found.expr; entry=""; }
+    else entry=String(memory);
+    updateDisplay();
+  }
+  function memMPlus(){
+    const v=getCurrent();
+    if(v!==null) memory=Math.round((memory+v+Number.EPSILON)*1e12)/1e12;
+    updateDisplay();
+  }
+  function memMMinus(){
+    const v=getCurrent();
+    if(v!==null) memory=Math.round((memory-v+Number.EPSILON)*1e12)/1e12;
+    updateDisplay();
+  }
+  function getCurrent(){
+    if(entry) return Number(entry);
+    if(!isNaN(Number(mainDisplay.textContent))) return Number(mainDisplay.textContent);
+    return 0;
+  }
+
+  function appendDigit(d){
+    if(d==="." && entry.includes(".")) return;
+    if(entry==="0" && d!=="." ) entry=d;
+    else entry+=d;
+    updateDisplay();
+  }
+
+  function appendOperator(op){
+    if(entry==="" && expr==="" && op==="-" ){ entry="-"; updateDisplay(); return; }
+    if(entry.endsWith(".")) entry=entry.slice(0,-1);
+    if(entry){ expr+=entry; entry=""; }
+    expr = expr.replace(/[+\-*/]$/,"") + op;
+    updateDisplay();
+  }
+
+  function clearAll(){ expr=""; entry=""; updateDisplay(); }
+  function clearEntry(){ entry=""; updateDisplay(); }
+
+  function pressEquals(){
+    if(entry) expr+=entry;
+    expr = expr.replace(/[+\-*/]$/,"");
+    if(!expr){ updateDisplay(); return; }
+    const r = evaluateExpression(expr);
+    if(r.error){
+      mainDisplay.textContent=r.error;
+      subDisplay.textContent=formatOp(expr)+" =";
+      expr=""; entry="";
+      return;
+    }
+    const val = r.value;
+    pushHistory(expr,val);
+    mainDisplay.textContent=val;
+    subDisplay.textContent=formatOp(expr)+" =";
+    entry=String(val);
+    expr="";
+    updateDisplay();
+  }
+
+  keypad.addEventListener("click",e=>{
+    const b=e.target.closest("button"); if(!b) return;
+    const v=b.dataset.value;
+    const a=b.dataset.action;
+
+    if(v!==undefined){
+      if(/\d/.test(v) || v===".") appendDigit(v);
+      else appendOperator(v);
+      return;
+    }
+    if(a){
+      if(a==="C") clearAll();
+      if(a==="CE") clearEntry();
+      if(a==="equals") pressEquals();
+      if(a==="MC") memMC();
+      if(a==="MR") memMR();
+      if(a==="M+") memMPlus();
+      if(a==="M-") memMMinus();
+    }
+  });
+
+  historyList.addEventListener("click",e=>{
+    const b=e.target.closest("button[data-action='load']");
+    if(!b) return;
+    const i=Number(b.dataset.idx);
+    const h=history[i];
+    expr=h.expr;
+    entry="";
+    updateDisplay();
+  });
+
+  window.addEventListener("keydown",e=>{
+    const k=e.key;
+    if((k>="0" && k<="9")||k==="."){ appendDigit(k); e.preventDefault(); return; }
+    if(k==="+"||k==="-"||k==="*"||k==="/"){ appendOperator(k); e.preventDefault(); return; }
+    if(k==="Enter"||k==="="){ pressEquals(); e.preventDefault(); return; }
+    if(k==="Backspace"){ 
+      if(entry) entry=entry.slice(0,-1); 
+      updateDisplay(); 
+      e.preventDefault(); 
+      return;
+    }
+    if(k==="Escape"){ clearAll(); e.preventDefault(); return; }
+
+    if(e.ctrlKey){
+      if(k.toLowerCase()==="m" && !e.shiftKey){ memMR(); e.preventDefault(); }
+      if(k.toLowerCase()==="m" && e.shiftKey){ memMC(); e.preventDefault(); }
+      if(k==="+"){ memMPlus(); e.preventDefault(); }
+      if(k==="-" ){ memMMinus(); e.preventDefault(); }
+    }
+  });
+
+  updateDisplay();
+  renderHistory();
+})();
+</script>
+</body>
+</html>
